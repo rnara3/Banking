@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ice Skating Reservation - Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <style type="text/css">/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #1e90ff;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Form section */
+.auth-section {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #1e90ff;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    background-color: #1e90ff;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #4682b4;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Links for switching between login and register */
+p {
+    text-align: center;
+    margin-top: 20px;
+}
+
+a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+    
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ice Skating Reservation - Login</h1>
+    </header>
+
+    <main>
+        <section class="auth-section">
+            <h2>Login to Your Account</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Login</button>
+
+                <p>Don't have an account? <a href="Register_Page2.html">Register here</a></p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Ice Skating Reservation</p>
+    </footer>
+
+    <script>
+        // Simulating login form submission
+        document.getElementById("login-form").addEventListener("submit", function(e) {
+            e.preventDefault(); // Prevent form submission
+
+            // Get email and password values
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // Check if login credentials are correct (this is a simple simulation, in a real system you'd check against a database)
+            if (email === "user@example.com" && password === "password123") {
+                alert("Login Successful!");
+                window.location.href = "SeatSelectionWithPayment2.html"; // Redirect to reservation page
+            } else {
+                alert("Invalid credentials, please try again.");
+            }
+        });
+    </script>
+</body>
+</html>

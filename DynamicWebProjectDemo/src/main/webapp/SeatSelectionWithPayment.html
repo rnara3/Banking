@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Seat Reservation</title>
+    <link rel="stylesheet" href="styles.css">
+    <style type="text/css">
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f4f8;
+    color: #333;
+}
+
+header {
+    background-color: #005f99;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+main {
+    margin: 20px auto;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: white;
+    background-color: #005f99;
+    
+}
+ h2 {
+    color: #005f99;
+    
+}
+
+.seat-selection, .payment {
+    margin-bottom: 20px;
+}
+
+.seating-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.column {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.aisle {
+    width: 40px; /* Represents the aisle space */
+}
+
+.seat {
+    padding: 10px 20px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.seat:hover {
+    background-color: #005f99;
+    color: white;
+}
+
+.seat.selected {
+    background-color: #008000;
+    color: white;
+    pointer-events: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input, button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #005f99;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #003d66;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+   .reset-button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+    background-color: #c0392b;
+}
+    
+    </style>
+    
+</head>
+<body>
+    <header>
+        <h1>Airline Seat Reservation</h1>
+    </header>
+    <main>
+    
+        <section class="seat-selection">
+            <h2>Select Your Seats</h2>
+            <label for="num-passengers">Number of Passengers:</label>
+            <input type="number" id="num-passengers" min="1" max="6" value="1" />
+ <div class="seating-chart">
+        <!-- Seating rows as before -->
+    </div>
+    <button id="reset-selection" class="reset-button">Reset Selection</button>
+    <br/>    <br/>
+      
+    
+            <div class="seating-chart">
+                <!-- Row 1 -->
+                <div class="row">
+                    <div class="column">
+                        <button class="seat" data-seat="1A">1A</button>
+                        <button class="seat" data-seat="1B">1B</button>
+                        <button class="seat" data-seat="1C">1C</button>
+                    </div>
+                    <div class="aisle"></div>
+                    <div class="column">
+                        <button class="seat" data-seat="1D">1D</button>
+                        <button class="seat" data-seat="1E">1E</button>
+                        <button class="seat" data-seat="1F">1F</button>
+                    </div>
+                </div>
+                <!-- Row 2 -->
+                <div class="row">
+                    <div class="column">
+                        <button class="seat" data-seat="2A">2A</button>
+                        <button class="seat" data-seat="2B">2B</button>
+                        <button class="seat" data-seat="2C">2C</button>
+                    </div>
+                    <div class="aisle"></div>
+                    <div class="column">
+                        <button class="seat" data-seat="2D">2D</button>
+                        <button class="seat" data-seat="2E">2E</button>
+                        <button class="seat" data-seat="2F">2F</button>
+                    </div>
+                </div>
+                <!-- Add more rows as needed -->
+            </div>
+            <p id="selected-seat">Selected Seats: None</p>
+        </section>
+        
+<script type="text/javascript">
+const seats = document.querySelectorAll(".seat");
+const selectedSeatDisplay = document.getElementById("selected-seat");
+const numPassengersInput = document.getElementById("num-passengers");
+
+let maxSeats = parseInt(numPassengersInput.value); // Default to 1 passenger
+let selectedSeats = [];
+
+// Update max seats dynamically based on input
+numPassengersInput.addEventListener("input", () => {
+    maxSeats = parseInt(numPassengersInput.value);
+    selectedSeats = []; // Reset selected seats
+    updateSelectedSeatsDisplay();
+    seats.forEach(seat => seat.classList.remove("selected")); // Clear all selections
+});
+
+// Add click event to each seat
+seats.forEach(seat => {
+    seat.addEventListener("click", () => {
+        const seatNumber = seat.dataset.seat;
+
+        if (selectedSeats.includes(seatNumber)) {
+            // Deselect the seat
+            selectedSeats = selectedSeats.filter(s => s !== seatNumber);
+            seat.classList.remove("selected");
+        } else if (selectedSeats.length < maxSeats) {
+            // Select the seat
+            selectedSeats.push(seatNumber);
+            seat.classList.add("selected");
+        } else {
+            alert(`You can only select up to ${maxSeats} seats.`);
+        }
+
+        updateSelectedSeatsDisplay();
+    });
+});
+function updateSelectedSeatsDisplay() {
+    selectedSeatDisplay.textContent = `Selected Seats: ${selectedSeats.length > 0 ? selectedSeats.join(", ") : "None"}`;
+}
+
+document.getElementById("payment-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (selectedSeats.length === maxSeats) {
+        alert(`Payment Successful! You have reserved seats: ${selectedSeats.join(", ")}.`);
+    } else {
+        alert(`Please select ${maxSeats} seats before proceeding to payment.`);
+    }
+});
+</script>
+
+<script type="text/javascript">
+// Update the selected seats display
+
+
+const resetButton = document.getElementById("reset-selection");
+
+//Add event listener to the Reset button
+resetButton.addEventListener("click", () => {
+ // Clear selected seats array
+ selectedSeats = [];
+ 
+ // Remove the "selected" class from all seats
+ seats.forEach(seat => seat.classList.remove("selected"));
+ 
+ // Update the selected seats display
+ updateSelectedSeatsDisplay();
+});
+</script>
+
+        <section class="payment">
+            <h2>Payment Details</h2>
+            <form id="payment-form">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="card-number">Card Number:</label>
+                <input type="text" id="card-number" name="card-number" maxlength="16" required>
+
+                <label for="expiry">Expiry Date:</label>
+                <input type="month" id="expiry" name="expiry" required>
+
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" maxlength="3" required>
+
+                <button type="submit">Confirm and Pay</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Airline Reservation System</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
